@@ -1,6 +1,7 @@
-#include <stdio.h>
+#include "matrix.c"
 
 int main(void) {
-    printf("Hello, World!\n");
+    init();
+    display();
     return 0;
 }
