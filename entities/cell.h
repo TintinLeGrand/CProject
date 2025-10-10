@@ -10,16 +10,16 @@ typedef enum cell_content {
 } Cell_Content;
 
 typedef struct cell {
-    int id;
     Cell_Content cell_content;
+    int visited;
     int point;
 } Cell;
 
 int vectors[4][2] = {
-    {0, -1},
-    {0, 1},
-    {-1, 0},
-    {1, 0}
+    {0, -2},
+    {0, 2},
+    {-2, 0},
+    {2, 0}
 };
 
 #endif //PROJECT_CELL_H

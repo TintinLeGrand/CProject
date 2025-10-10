@@ -8,12 +8,14 @@
 #include "settings/labyrinth.h"
 #include "entities/cell.h"
 
-#define LAST_ROW LENGTH-1
-#define LAST_COL WIDTH-1
-
-int is_border(int row, int col);
+#define LAST_ROW (LENGTH-1)
+#define LAST_COL (WIDTH-1)
 
 void display();
+
+void destroy(int col, int row);
+
+void set_void(Cell *cell);
 
 void init() {
     // Fill with walls, a player and an exit
@@ -24,7 +26,6 @@ void init() {
                                                    : (row == LAST_ROW && col == LAST_COL - 1)
                                                          ? EXIT
                                                          : WALL;
-            labyrinth[row][col].id = -1;
         }
         printf("\n");
     }
@@ -34,18 +35,43 @@ void init() {
     for (int row = 1; row < LENGTH; row += 2) {
         for (int col = 1; col < WIDTH; col += 2) {
             labyrinth[row][col].cell_content = VOID;
-            labyrinth[row][col].id = id++;
         }
     }
 
     // Break walls while it remains IDs
-    int col= 1 + (rand() % WIDTH);
-    int row= 1 + (rand() % LENGTH);
-
+    int col = 1 + (rand() % ((WIDTH - 2) / 2)) * 2;
+    int row = 1 + (rand() % ((LENGTH - 2) / 2)) * 2;
+    destroy(col, row);
 }
 
-int is_border(int row, int col) {
-    return (row == 0 || col == 0 || row == LAST_ROW || col == LAST_COL);
+void set_void(Cell *cell) {
+    cell->visited = 1;
+    cell->cell_content = VOID;
+}
+
+void destroy(int col, int row) {
+    Cell *cell = &labyrinth[row][col];
+    if (cell->visited != 1) {
+        cell->visited = 1;
+        int random[4] = {0, 1, 2, 3};
+        for (int i = 3; i > 0; i--) {
+            int j = rand() % (i + 1);
+            int tmp = random[i];
+            random[i] = random[j];
+            random[j] = tmp;
+        }
+
+        for (int i = 0; i < 4; i++) {
+            int next_col = col + vectors[random[i]][0];
+            int next_row = row + vectors[random[i]][1];
+            if (!(next_col < 1 || next_col > LAST_COL - 1 || next_row < 1 || next_row > LAST_ROW - 1)) {
+                if (labyrinth[next_row][next_col].visited != 1) {
+                    destroy(next_col, next_row);
+                    set_void(&labyrinth[(row + next_row) / 2][(col + next_col) / 2]);
+                }
+            }
+        }
+    }
 }
 
 void display() {
@@ -55,9 +81,6 @@ void display() {
             printf("%c", labyrinth[row][col].cell_content);
         }
         printf("     ");
-        for (int col = 0; col < WIDTH; col++) {
-            printf("%2d", labyrinth[row][col].id);
-        }
         printf("\n");
     }
 }
