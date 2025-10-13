@@ -8,22 +8,21 @@
 #include "settings/labyrinth.h"
 #include "entities/cell.h"
 
-#define LAST_ROW (LENGTH-1)
-#define LAST_COL (WIDTH-1)
+void init(Cell **labyrinth, int length, int width);
 
-void display();
+void display(Cell **labyrinth, int length, int width);
 
-void destroy(int col, int row);
+void destroy(Cell **labyrinth, int col, int row, int last_col, int last_row);
 
 void set_void(Cell *cell);
 
-void init() {
+void init(Cell **labyrinth, int length, int width) {
     // Fill with walls, a player and an exit
-    for (int row = 0; row < LENGTH; row++) {
-        for (int col = 0; col < WIDTH; col++) {
+    for (int row = 0; row < length; row++) {
+        for (int col = 0; col < width; col++) {
             labyrinth[row][col].cell_content = (row == 0 & col == 1)
                                                    ? PLAYER
-                                                   : (row == LAST_ROW && col == LAST_COL - 1)
+                                                   : (row == length - 1 && col == (width -1) - 1)
                                                          ? EXIT
                                                          : WALL;
         }
@@ -32,16 +31,16 @@ void init() {
 
     // Draw the void cells with unique ID
     int id = 1;
-    for (int row = 1; row < LENGTH; row += 2) {
-        for (int col = 1; col < WIDTH; col += 2) {
+    for (int row = 1; row < length; row += 2) {
+        for (int col = 1; col < width; col += 2) {
             labyrinth[row][col].cell_content = VOID;
         }
     }
 
     // Break walls while it remains IDs
-    int col = 1 + (rand() % ((WIDTH - 2) / 2)) * 2;
-    int row = 1 + (rand() % ((LENGTH - 2) / 2)) * 2;
-    destroy(col, row);
+    int col = 1 + (rand() % ((width - 2) / 2)) * 2;
+    int row = 1 + (rand() % ((length - 2) / 2)) * 2;
+    destroy(labyrinth, col, row, width - 1, length - 1);
 }
 
 void set_void(Cell *cell) {
@@ -49,7 +48,7 @@ void set_void(Cell *cell) {
     cell->cell_content = VOID;
 }
 
-void destroy(int col, int row) {
+void destroy(Cell **labyrinth, int col, int row, int last_col, int last_row) {
     Cell *cell = &labyrinth[row][col];
     if (cell->visited != 1) {
         cell->visited = 1;
@@ -64,9 +63,9 @@ void destroy(int col, int row) {
         for (int i = 0; i < 4; i++) {
             int next_col = col + vectors[random[i]][0];
             int next_row = row + vectors[random[i]][1];
-            if (!(next_col < 1 || next_col > LAST_COL - 1 || next_row < 1 || next_row > LAST_ROW - 1)) {
+            if (!(next_col < 1 || next_col > last_col - 1 || next_row < 1 || next_row > last_row - 1)) {
                 if (labyrinth[next_row][next_col].visited != 1) {
-                    destroy(next_col, next_row);
+                    destroy(labyrinth, next_col, next_row, last_col, last_row);
                     set_void(&labyrinth[(row + next_row) / 2][(col + next_col) / 2]);
                 }
             }
@@ -74,10 +73,10 @@ void destroy(int col, int row) {
     }
 }
 
-void display() {
+void display(Cell **labyrinth, int length, int width) {
     char c;
-    for (int row = 0; row < LENGTH; row++) {
-        for (int col = 0; col < WIDTH; col++) {
+    for (int row = 0; row < length; row++) {
+        for (int col = 0; col < width; col++) {
             printf("%c", labyrinth[row][col].cell_content);
         }
         printf("     ");
