@@ -14,6 +14,8 @@ void display(Cell **labyrinth, int length, int width);
 
 void destroy(Cell **labyrinth, int col, int row, int last_col, int last_row);
 
+void save(Cell **labyrinth, FILE *file, int length, int width);
+
 void set_void(Cell *cell);
 
 void init(Cell **labyrinth, int length, int width) {
@@ -22,7 +24,7 @@ void init(Cell **labyrinth, int length, int width) {
         for (int col = 0; col < width; col++) {
             labyrinth[row][col].cell_content = (row == 0 & col == 1)
                                                    ? PLAYER
-                                                   : (row == length - 1 && col == (width -1) - 1)
+                                                   : (row == length - 1 && col == (width - 1) - 1)
                                                          ? EXIT
                                                          : WALL;
         }
@@ -81,5 +83,14 @@ void display(Cell **labyrinth, int length, int width) {
         }
         printf("     ");
         printf("\n");
+    }
+}
+
+void save(Cell **labyrinth, FILE *file, int length, int width) {
+    for (int row = 0; row < length; row++) {
+        for (int col = 0; col < width; col++) {
+            fprintf(file, "%c", labyrinth[row][col].cell_content);
+        }
+        fprintf(file, "\n");
     }
 }
