@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/personnal/dev/inge/intro_prog/project/cmake_install.cmake",
+		"C:/personnal/dev/inge/intro_prog/project/vendored/SDL/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

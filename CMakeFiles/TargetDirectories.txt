@@ -1,0 +1,9 @@
+C:/personnal/dev/inge/intro_prog/project/CMakeFiles/hello.dir
+C:/personnal/dev/inge/intro_prog/project/CMakeFiles/project.dir
+C:/personnal/dev/inge/intro_prog/project/CMakeFiles/edit_cache.dir
+C:/personnal/dev/inge/intro_prog/project/CMakeFiles/rebuild_cache.dir
+C:/personnal/dev/inge/intro_prog/project/vendored/SDL/CMakeFiles/SDL3-shared.dir
+C:/personnal/dev/inge/intro_prog/project/vendored/SDL/CMakeFiles/SDL3_test.dir
+C:/personnal/dev/inge/intro_prog/project/vendored/SDL/CMakeFiles/SDL_uclibc.dir
+C:/personnal/dev/inge/intro_prog/project/vendored/SDL/CMakeFiles/edit_cache.dir
+C:/personnal/dev/inge/intro_prog/project/vendored/SDL/CMakeFiles/rebuild_cache.dir
