@@ -5,3 +5,7 @@
 void move() {
     // TODO
 }
+
+int choice() {
+    // TODO
+}
