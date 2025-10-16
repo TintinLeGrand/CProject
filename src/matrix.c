@@ -5,22 +5,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "settings/labyrinth.h"
-#include "entities/cell.h"
 
-void init(Cell **labyrinth, int length, int width);
+#include "matrix.h"
 
-void display(Cell **labyrinth, int length, int width);
-
-void destroy(Cell **labyrinth, int col, int row, int last_col, int last_row);
-
-void set_void(Cell *cell);
+int vectors[4][2] = {
+    {0, -2},
+    {0, 2},
+    {-2, 0},
+    {2, 0}
+};
 
 void init(Cell **labyrinth, int length, int width) {
     // Fill with walls, a player and an exit
     for (int row = 0; row < length; row++) {
         for (int col = 0; col < width; col++) {
-            labyrinth[row][col].cell_content = (row == 0 & col == 1)
+            labyrinth[row][col].cell_content = (row == 0 && col == 1)
                                                    ? PLAYER
                                                    : (row == length - 1 && col == (width -1) - 1)
                                                          ? EXIT
@@ -30,7 +29,6 @@ void init(Cell **labyrinth, int length, int width) {
     }
 
     // Draw the void cells with unique ID
-    int id = 1;
     for (int row = 1; row < length; row += 2) {
         for (int col = 1; col < width; col += 2) {
             labyrinth[row][col].cell_content = VOID;
@@ -74,7 +72,6 @@ void destroy(Cell **labyrinth, int col, int row, int last_col, int last_row) {
 }
 
 void display(Cell **labyrinth, int length, int width) {
-    char c;
     for (int row = 0; row < length; row++) {
         for (int col = 0; col < width; col++) {
             printf("%c", labyrinth[row][col].cell_content);

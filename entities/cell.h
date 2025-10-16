@@ -15,11 +15,6 @@ typedef struct cell {
     int point;
 } Cell;
 
-int vectors[4][2] = {
-    {0, -2},
-    {0, 2},
-    {-2, 0},
-    {2, 0}
-};
+extern int vectors[4][2];
 
 #endif //PROJECT_CELL_H
