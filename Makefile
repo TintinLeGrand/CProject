@@ -14,7 +14,7 @@ OBJECTS = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SOURCES))
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS) | $(BIN_DIR)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) `sdl2-config --cflags --libs`
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
