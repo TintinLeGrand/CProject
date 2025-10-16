@@ -8,4 +8,5 @@ void move() {
 
 int choice() {
     // TODO
+    return 0;
 }

@@ -5,18 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "entities/cell.h"
-#include "matrix.c"
-
-void open_lab(Cell ***labyrinth, int *length, int *width);
-
-void free_lab(Cell **labyrinth, int length);
-
-void load();
-
-void play(Cell **labyrinth, int length, int width);
-
-void contact();
+#include "game.h"
+#include "matrix.h"
+#include "cell.h"
 
 void launcher() {
     char choice;
